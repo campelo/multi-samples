@@ -39,9 +39,9 @@ public class ManageEntityPropertiesDbContext : DbContext
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {
             List<Type> filterTypes = new();
-            if (typeof(IEntityBase).IsAssignableFrom(entityType.ClrType))
+            if (typeof(EntityBase).IsAssignableFrom(entityType.ClrType))
             {
-                filterTypes.Add(typeof(IEntityBase));
+                filterTypes.Add(typeof(EntityBase));
                 entityType.ApplyActiveHandlerIndex();
             }
             entityType.ApplyQueryFilter(filterTypes);

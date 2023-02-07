@@ -46,7 +46,6 @@ public class ProductController : ControllerBase
         var p = _dbContext.Products.FirstOrDefault(x => x.Id == id);
         if (product == null)
             throw new KeyNotFoundException();
-        p.Status = product.Status;
         p.Name = product.Name;
         p.Description = product.Description;
         _dbContext.Products.Update(p);

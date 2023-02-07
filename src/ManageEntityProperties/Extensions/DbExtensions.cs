@@ -22,9 +22,9 @@ public static class DbExtensions
         foreach (var entry in dbContext.ChangeTracker.Entries().Where(e => e.State == EntityState.Added))
         {
             Type entryType = entry.Entity.GetType();
-            if (typeof(IEntityBase).IsAssignableFrom(entryType))
+            if (typeof(EntityBase).IsAssignableFrom(entryType))
             {
-                var entity = entry.Entity as IEntityBase;
+                var entity = entry.Entity as EntityBase;
                 entity.Status = "A";
             }
         }
@@ -36,9 +36,9 @@ public static class DbExtensions
         foreach (var entry in dbContext.ChangeTracker.Entries().Where(e => e.State == EntityState.Modified))
         {
             Type entryType = entry.Entity.GetType();
-            if (typeof(IEntityBase).IsAssignableFrom(entryType))
+            if (typeof(EntityBase).IsAssignableFrom(entryType))
             {
-                var entity = entry.Entity as IEntityBase;
+                var entity = entry.Entity as EntityBase;
                 entity.ModifiedOn = DateTime.UtcNow;
             }
         }
@@ -50,10 +50,10 @@ public static class DbExtensions
         foreach (var entry in dbContext.ChangeTracker.Entries().Where(e => e.State == EntityState.Deleted))
         {
             Type entryType = entry.Entity.GetType();
-            if (typeof(IEntityBase).IsAssignableFrom(entryType))
+            if (typeof(EntityBase).IsAssignableFrom(entryType))
             {
                 entry.State = EntityState.Modified;
-                var entity = entry.Entity as IEntityBase;
+                var entity = entry.Entity as EntityBase;
                 if (entity is not null)
                     entity.Status = "I";
             }
@@ -63,7 +63,7 @@ public static class DbExtensions
 
     public static void ApplyActiveHandlerIndex(this IMutableEntityType entity)
     {
-        entity.AddIndex(entity.FindProperty(nameof(IEntityBase.Status)));
+        entity.AddIndex(entity.FindProperty(nameof(EntityBase.Status)));
     }
 
     public static void ApplyQueryFilter(this IMutableEntityType entity, List<Type> filterTypes)
@@ -82,7 +82,7 @@ public static class DbExtensions
         where TEntity : class
     {
         List<Expression<Func<TEntity, bool>>> expressions = new();
-        if (filterTypes.Contains(typeof(IEntityBase)))
+        if (filterTypes.Contains(typeof(EntityBase)))
             expressions.Add(SetupActiveHandlerQueryFilter<TEntity>());
 
         if (!expressions.Any())
@@ -99,7 +99,7 @@ public static class DbExtensions
     private static Expression<Func<TEntity, bool>> SetupActiveHandlerQueryFilter<TEntity>()
         where TEntity : class
     {
-        Expression<Func<TEntity, bool>> filter = x => (x as IEntityBase).Status == "A";
+        Expression<Func<TEntity, bool>> filter = x => (x as EntityBase).Status == "A";
         return filter;
     }
 }

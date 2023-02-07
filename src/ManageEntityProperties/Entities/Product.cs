@@ -1,12 +1,12 @@
 ﻿namespace ManageEntityProperties.Entities;
 
-public class Product : IEntityBase
+public class Product : EntityBase
 {
     public int Id { get; set; }
 
-    public string Status { get; set; } = "A";
+    //public string Status { get; set; } = "A";
 
-    public DateTime ModifiedOn { get; set; } = DateTime.MinValue;
+    //public DateTime ModifiedOn { get; set; } = DateTime.MinValue;
 
     public string Name { get; set; } = string.Empty;
 
