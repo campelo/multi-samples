@@ -1,0 +1,7 @@
+﻿@model Enterprise
+
+<form method="post" asp-action="SetEnterprise">
+    <label for="enterpriseName">Enter the enterprise name:</label>
+    <input type="text" id="enterpriseName" name="Name" value="@Model.Name"/>
+    <button type="submit">Submit</button>
+</form>

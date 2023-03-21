@@ -19,7 +19,7 @@ var groups = items
 var uniques = groups.Where(x => x.Count() == 1);
 var nonUniques = groups.Where(x => x.Count() > 1);
 
-List<Item>? listObjects = uniques.Select(group => group.ToList()).Aggregate((a, b) => { a.AddRange(b); return a.ToList(); }).ToList();
+List<Item>? listObjects = uniques.Select(group => group.ToList()).Aggregate((a, b) => { a.AddRange(b); return a; }).ToList();
 
 Console.WriteLine($"{nameof(uniques)} : {uniques.Count()}");
 // uniques : 5

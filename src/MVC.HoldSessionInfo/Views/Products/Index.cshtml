@@ -1,0 +1,7 @@
+﻿@model Product
+
+<form method="post" asp-action="SetProduct">
+    <label for="productName">Enter the product name:</label>
+    <input type="text" id="productName" name="Name" value="@Model.Name"/>
+    <button type="submit">Submit</button>
+</form>
