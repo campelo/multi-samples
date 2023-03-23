@@ -3,7 +3,7 @@
 
 <div class="card mb-3">
     <div class="card-header">
-        <h5 class="card-title">@Model.CertificationType.GetDisplayName()</h5>
+        <h5 class="card-title">@Model.Name</h5>
     </div>
     <div class="card-body">
         @Html.HiddenFor(m => m.Index)
@@ -11,20 +11,21 @@
 
         <div class="form-group">
             @Html.LabelFor(m => m.CertificationType)
-            @Html.DropDownListFor(m => m.CertificationType, Model.CertificationTypes, "-- Select --", new { @class = "form-control"})
+            @Html.DropDownList("CertificationType", Model.CertificationTypes, "-- Select --", new { @class = "form-control"})
             @Html.ValidationMessageFor(m => m.CertificationType, "", new { @class = "text-danger" })
+            <div class="validation-message"></div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Name)
             @Html.TextBoxFor(model => model.Name, new { @class = "form-control"})
+            <div class="validation-message"></div>
         </div>
         <div class="form-group">
             <label for="Description">Description</label>
             @Html.TextBoxFor(model => model.Description, new { @class = "form-control"})
         </div>
         <button type="button" class="btn btn-danger" onclick="$(this).closest('.card').remove()">Remove</button>
-    </div>
-
-
-    
+        <button type="button" class="btn btn-primary validate-certification-form">Validate</button>
+    </div>  
 </div>
+

@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace MVC.HoldSessionInfo.Controllers;
 
-public class EnterprisesController : Controller
+public class EnterpriseController : Controller
 {
     public ActionResult Index()
     {
@@ -26,6 +26,16 @@ public class EnterprisesController : Controller
         byte[] enterpriseData = Encoding.UTF8.GetBytes(jEnterprise);
         HttpContext.Session.Set("Enterprise", enterpriseData);
         return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public IActionResult EditEnterprise(EnterpriseViewModel model)
+    {
+        if (!ModelState.IsValid)
+            return View("Index", model);
+
+        // ...save enterprise
+        return View("Index", model);
     }
 
 }

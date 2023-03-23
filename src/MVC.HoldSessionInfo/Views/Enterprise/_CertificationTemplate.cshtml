@@ -1,0 +1,14 @@
+﻿@using System.Web
+@using MVC.HoldSessionInfo.Extensions
+@model EnterpriseViewModel
+
+@Html.Raw(HttpUtility.HtmlDecode(
+        Html.Partial("_CertificationForm", new CertificationViewModel{
+            EnterpriseId = Model.Id,
+            CertificationTypes = new List<SelectListItem>{
+                new SelectListItem{ Value= CertificationType.TypeA.GetDisplayName(), Text = CertificationType.TypeA.GetDisplayName() },
+                new SelectListItem{ Value= CertificationType.TypeB.GetDisplayName(), Text = CertificationType.TypeB.GetDisplayName() },
+                new SelectListItem{ Value= CertificationType.TypeC.GetDisplayName(), Text = CertificationType.TypeC.GetDisplayName() }
+            },
+            Index = "__index__"
+        }).ToHtmlString().Replace("__index__", "newIndex")))
