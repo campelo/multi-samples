@@ -1,7 +1,64 @@
-﻿@model Enterprise
+﻿@model EnterpriseViewModel
 
-<form method="post" asp-action="SetEnterprise">
-    <label for="enterpriseName">Enter the enterprise name:</label>
-    <input type="text" id="enterpriseName" name="Name" value="@Model.Name"/>
-    <button type="submit">Submit</button>
-</form>
+<h1>Edit Enterprise</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Enterprise</h2>
+        @using (Html.BeginForm("EditEnterprise", "Enterprise", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                @Html.LabelFor(m=>m.Name)
+                @Html.EditorFor(m=>m.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m=>m.Name, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m=>m.City)
+                @Html.EditorFor(m=>m.City, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m=>m.City, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m=>m.Certifications)
+                
+                <div id="certifications">
+                    @foreach(var certification in Model.Certifications)
+                    {
+                        Html.RenderPartial("_CertificationPartial", certification);
+                    }
+                </div>
+                <button type="button" class="btn btn-primary" id="addCertification">Add Certification</button>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Save changes</button>
+            </div>
+        }
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(function(){
+            $('#addCertification').click(function(){
+                var index = $('#certifications .card').length;
+                var template = $('#certificationTemplate').html().replace(/__index__/g, index);
+                $('#certifications').append(template);
+            });
+        });
+    </script>
+}
+
+<script type="text/template" id="certificationTemplate">
+    @Html.Raw(System.Web.HttpUtility.HtmlDecode(
+        Html.Partial("_CertificationPartial", new CertificationViewModel{
+            EnterpriseId = Model.Id,
+            CertificationTypes = Model.CertificationsTypes,
+            Index = '__index__'
+        }).ToHtmlString().Replace("__index__", "newIndex")))
+</script>
