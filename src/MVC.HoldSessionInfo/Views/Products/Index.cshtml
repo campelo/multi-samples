@@ -3,5 +3,32 @@
 <form method="post" asp-action="SetProduct">
     <label for="productName">Enter the product name:</label>
     <input type="text" id="productName" name="Name" value="@Model.Name"/>
+
+    <div>
+        <label>
+            <input type="radio" name="option" value="1" onclick="toggleRadio(this)">Option 1
+        </label>
+
+        <label>
+            <input type="radio" name="option" value="2" onclick="toggleRadio(this)">Option 2
+        </label>
+
+        <label>
+            <input type="radio" name="option" value="3" onclick="toggleRadio(this)">Option 3
+        </label>
+
+        <label>
+            <input type="radio" name="option" value="4" onclick="toggleRadio(this)">Option 4
+        </label>
+    </div>
     <button type="submit">Submit</button>
 </form>
+
+@section Scripts{
+    <script>
+        function toggleRadio(radio){
+            console.log(radio.attr('previousValue'));
+            radio.checked = radio.checked;
+        }
+    </script>
+}
